@@ -1,4 +1,5 @@
 venv
+*.json
 pretty_midi
 vis-framework
 .ipynb_checkpoints/
