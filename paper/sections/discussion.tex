@@ -7,7 +7,7 @@ Gradients of the log-likelihood with respect to the embeddings are used to train
 The log-likelihood means the model will maximize the probability of correctly classifying the context given the training example.
 If the model assigns too high a probability to correct contexts, it will be overconfident on other (incorrect) contexts, and the derivative of the log-likelihood will push the embeddings further apart.
 But if the model assigns too low a probability to correct contexts, the gradient of the log-likelihood will flip signs and pull the embeddings closer together.
-The minimal geometric structure that minimizes these constraints is a circle.
+The minimal geometric structure that minimizes these constraints is a circle. If the parts of the circle are perturbed (e.g. imagine shifting the values of an embedding in the circle by a large amonut), the above arguments show that it will return to a circular structure by virtue of the gradients of the objective function.
 We thus expect a circle from the principal components of highly stable embeddings (such as the embeddings of chords in the circle of fifths).
 To see why the circle of fifths respects the ordering, we consider the context window (\textbf{(size 5? in our case)}).
 Chords in the circle of fifths occur in each others' contexts, but usually only nearest neighbors (e.g. it is rare to see C major followed by B major).
