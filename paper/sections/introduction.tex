@@ -1,11 +1,14 @@
 %!TEX root = ../ycac2vec.tex
 
+\subsection{Word embeddings}
 % lit review on word embeddings
-
 Probabilistic models such as Latent Dirichlet Allocation \cite{Blei2003} are standard tools for analyzing text data. However, such models use bag-of-words representations. Therefore they extract meaning from word co-occurrance counts on the document level, and ignore the sequential nature of language. Syntax, punctuation, and grammar are intrinsically sequential, and a good model of natural language or tree structures should be able to capture both information from co-occurrance counts and information across time. While Latent Dirichlet Allocation has been used to model music (\textbf{Q:citation?}), music is inherently sequential. For in-depth analysis of style in music, we need embedding models.
 
 Word embeddings, or real-valued vectors representing words in a vocabulary, were first introduced by \cite{Bengio2003} but popularized by \cite{Mikolov2013a}. Such models typically have a log-bilinear form \cite{Mnih2007}, and are trained using negative sampling with a fixed size context window \cite{Mikolov2013a}. This is equivalent to matrix factorization of a shifted pointwise mutual information word-context matrix \cite{Levy}. To see this, construct a co-occurrance matrix of words, where the rows and columns are the words in the vocabulary. Each entry $i, j$ in the matrix is the count of how many times word $i$ (e.g. `dog') ocurred in the context of word $j$ (e.g. `the'). Word embedding models such as the skip-gram model (word2vec) can be viewed as performing singular value decomposition on a transformed version of this matrix.  Compositional word embeddings for learning paragraph or document embeddings have also been proposed \cite{Le2014,Dai2015}. However, \cite{Levy2015a} suggests that much of the success of these types of distributed representations of words is due to the tricks needed to train such models such as noise contrastive estimation.
 
 
 % lit review on word embeddings applied to things other than natural language
+As useful models of discrete data, word embedding models are starting to be used in domains outside of natural language. For example, \cite{Asgari2015} embed protein sequences for classification, and \cite{Guardia-Sebaoun2015} develop an embedding model to build a recommendation system (for example, for recommending movies to users).
+There exists some prior work on applying word embedding models to music. \cite{Name2015} trained an embedding model on a corpus of 200 rock songs for the task of recommendating chords to composers.
 
+\subsection{Quantitative stylistic analysis of music}
