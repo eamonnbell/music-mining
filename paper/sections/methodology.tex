@@ -1,0 +1,21 @@
+\subsection{Corpus}\label{corpus}
+
+The Yale/Classical Archives Corpus (YCAC) is a database of pitch-class
+and time data from MIDI files contributed by users of
+classicalarchives.com encoding 8,980 distinct pieces of music
+\cite{white2014yale}. Each piece is represented by a sequence of
+time-coded chroma vectors obtained by ``salami slicing'' the original
+MIDI file.
+
+\subsection{Embedding space}\label{embedding-space}
+
+A word2vec algorithm was used to create a number of word-embedding
+spaces for the entire corpus and for corpora consisting only of the
+works of a single
+composer.\footnote{The implementation used was the word2vec model provided by the Python module `gensim`, which uses a skip-gram negative sampling (SGNS) model which has been shown to be effective on large textual corpora. \cite{rehurek_lrec}}.
+The algorithm treats each chroma vector as a word in a sentence. It
+returns an n-dimensional real-valued vector for each word. t-SNE
+dimensionality reduction was applied to the resultant word-embedding
+space to demonstrate its plausbility. PCA was applied to the resultant
+word-embedding space, and the locations of chroma vectors corresponding
+to major triads were plotted.

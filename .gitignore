@@ -19,3 +19,4 @@ dat/
 *.fdb_latexmk
 *.ipynb_checkpoints
 *.zip
+*.csv

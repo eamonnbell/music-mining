@@ -2,7 +2,7 @@
 
 As shown in Figure~\ref{fig:whole_corpus_circle_fifths}, we can see that the circle of fifths emerges from the structure of the learned vector space of chords in classical music.
 This is not an intuitive result at first.
-However, to see that this is a reasonable result of applying the skip-gram word2vec model (\textbf{or CBOW, whichever you used in gensim}), consider the log-likelihood of the model.
+However, to see that this is a reasonable result of applying the skip-gram word2vec model, consider the log-likelihood of the model.
 Gradients of the log-likelihood with respect to the embeddings are used to train the model.
 The log-likelihood means the model will maximize the probability of correctly classifying the context given the training example.
 If the model assigns too high a probability to correct contexts, it will be overconfident on other (incorrect) contexts, and the derivative of the log-likelihood will push the embeddings further apart.
