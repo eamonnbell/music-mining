@@ -4,14 +4,36 @@ The Yale/Classical Archives Corpus (YCAC) is a database of pitch-class
 and time data from MIDI files contributed by users of
 classicalarchives.com encoding 8,980 distinct pieces of music
 \cite{white2014yale}. Each piece is represented both by a sequence of
-time-coded music21.Chord objects and additional local key estimations, which were obtained by ``salami slicing'' the original MIDI file. That is, a new chord token is created at every moment a voice enters or leaves the musical texture.  A large subset of the corpus was divded into six subcorpora based on the dates of composition of the pieces. Where an exact date of composition was not found in the piece metadata provided with the YCAC, the midpoint of the date range given in the metadata was used.\footnote{Typically, this range was the lifespan of the composer.}
+time-coded \texttt{music21.Chord} objects and additional local key estimations, which were obtained by ``salami slicing'' the original MIDI file. That is, a new chord token is created at every moment a voice enters or leaves the musical texture. To restrict the total vocabulary of the word embedding models to be applied later, we reduce each chord token to its chroma vector. A chroma vector is a twelve-place binary vector, one for each pitch-class. This choice also reflects the general programmatic interest of music theory in generalizing about rules of harmonic progression based on pitch content.\footnote{We discuss the possibilites of extending the present methodology to other important harmonic features (for example, pitch-class multisets or pitch sets) below}. 
+
+A subset of the corpus was divided into four comparably-sized subcorpora based on the dates of composition of pieces, in fifty-year chunks from 1700--1899. Where an exact date of composition was not found in the piece metadata provided with the YCAC, the midpoint of the date range given in the metadata was used.\footnote{Typically, this range was the lifespan of the composer.}
+
+\begin{table}
+ \begin{center}
+ \begin{tabular}{|l|l|l|}
+  \hline
+  Date range & No. pieces  & No. slices  \\
+\hline
+\hline
+1700--1749 & 2 120 & 1 892 572 \\
+\hline
+1750--1799 & 1 806 & 2 820 522 \\
+\hline
+1800--1849 & 1 770 & 3 565 872 \\
+\hline
+1850--1899 & 1 601 & 2 635 754 \\
+\hline
+
+ \end{tabular}
+\end{center}
+ \caption{Piece (document) and slice (token) counts in the time-delimited subcorpora.}
+ \label{tab:counts}
+\end{table}
 
 \subsection{Embedding space}\label{embedding-space}
 
-A word2vec algorithm was used to create a number of word-embedding
-spaces for the entire corpus and for corpora consisting only of the
-works of a single
-composer.\footnote{The implementation used was the word2vec model provided by the Python module `gensim`, which uses a skip-gram negative sampling (SGNS) model which has been shown to be effective on large textual corpora. \cite{rehurek_lrec}}.
+A word2vec algorithm was used to train a number of word-embedding
+spaces. First, a space was trained on the entire corpus to evaluate its plausibility. Then, four separate word-embedding spaces were trained on the date-delimited subcorpora described above. \footnote{The implementation used was the word2vec model provided by the Python module `gensim`, which uses a skip-gram negative sampling (SGNS) model which has been shown to be effective on large textual corpora. \cite{rehurek_lrec}}.
 The algorithm treats each chroma vector as a word in a sentence. It
 returns an n-dimensional real-valued vector for each word. t-SNE
 dimensionality reduction was applied to the resultant word-embedding
