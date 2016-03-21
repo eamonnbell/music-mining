@@ -1,5 +1,6 @@
 %!TEX root = ../ycac2vec.tex
 
+\subsection{Why the circular topology obtains}
 As shown in Figure~\ref{fig:whole_corpus_circle_fifths}, we can see that the circle of fifths emerges from the structure of the learned vector space of chords in classical music.
 This is not an intuitive result at first.
 However, to see that this is a reasonable result of applying the skip-gram word2vec model, consider the log-likelihood of the model.
@@ -9,8 +10,10 @@ If the model assigns too high a probability to correct contexts, it will be over
 But if the model assigns too low a probability to correct contexts, the gradient of the log-likelihood will flip signs and pull the embeddings closer together.
 The minimal geometric structure that minimizes these constraints is a circle. If the parts of the circle are perturbed (e.g. imagine shifting the values of an embedding in the circle by a large amonut), the above arguments show that it will return to a circular structure by virtue of the gradients of the objective function.
 We thus expect a circle from the principal components of highly stable embeddings (such as the embeddings of chords in the circle of fifths).
+\subsection{Why the order of roots in circle of fifths is preserved}
 To see why the circle of fifths respects the ordering, we consider the context window (\textbf{(size 5? in our case)}).
 Chords in the circle of fifths occur in each others' contexts, but usually only nearest neighbors (e.g. it is rare to see C major followed by B major).
 Therefore C major and G major occur in each others' contexts and will be pushed closer together during training.
-But they will be pushed apart from their non-nearest-neighbors (such as B major).
-This shows they will respect the ordering apparent in classical music where common practices such as counterpoint result in transitions prevalent on the circle of fifths.
+But they will be pushed apart from their non-nearest-neighbors (such as B major). This shows they will respect the ordering apparent in classical music where common practices such as counterpoint result in transitions prevalent on the circle of fifths.
+\subsection{Tonal function in classical music is a lesson for the problem of polysemy in NLP}
+\subsection{A program for word embedding models in stylistic analysis}

@@ -3,9 +3,8 @@
 The Yale/Classical Archives Corpus (YCAC) is a database of pitch-class
 and time data from MIDI files contributed by users of
 classicalarchives.com encoding 8,980 distinct pieces of music
-\cite{white2014yale}. Each piece is represented by a sequence of
-time-coded chroma vectors obtained by ``salami slicing'' the original
-MIDI file.
+\cite{white2014yale}. Each piece is represented both by a sequence of
+time-coded music21.Chord objects and additional local key estimations, which were obtained by ``salami slicing'' the original MIDI file. That is, a new chord token is created at every moment a voice enters or leaves the musical texture.  A large subset of the corpus was divded into six subcorpora based on the dates of composition of the pieces. Where an exact date of composition was not found in the piece metadata provided with the YCAC, the midpoint of the date range given in the metadata was used.\footnote{Typically, this range was the lifespan of the composer.}
 
 \subsection{Embedding space}\label{embedding-space}
 
