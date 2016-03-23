@@ -15,6 +15,27 @@ To see why the circle of fifths respects the ordering, we consider the context w
 Chords in the circle of fifths occur in each others' contexts, but usually only nearest neighbors (e.g. it is rare to see C major followed by B major).
 Therefore C major and G major occur in each others' contexts and will be pushed closer together during training.
 But they will be pushed apart from their non-nearest-neighbors (such as B major). This shows they will respect the ordering apparent in classical music where common practices such as counterpoint result in transitions prevalent on the circle of fifths.
-\subsection{Tonal function in classical music is a lesson for the problem of polysemy in NLP}
-\subsection{A program for word embedding models in stylistic analysis}
-show example of suspension plot
+
+\subsection{Tonal function, polysemy and word embedding models}
+Word embedding models have been shown to perform well on analogical reasoning tasks. If an embedding model is trained on a sufficiently large and informative natural language corpus, the model can be used to solve for $x$ in analogies of the following form:
+
+$$\textrm{man}:\textrm{king}::\textrm{woman}:x$$
+
+By performing simple vector operations on the vectors corresponding to the known terms in the analogy, we end up with a new vector that represents $x$, which turns out to be closest to the vector in the space that corresponds to the token $\textrm{queen}$. In this way, model has been said to have captured at least some of the meaning of these individual terms.
+
+Turning to the musical case, consider a chain of major triads which are related by a perfect fifth. The language of functional harmony describes the relation between any two adjacent members of this chain (from left to right) as the `dominant-of' relation. For example:
+
+$$\hdots \textrm{G major} \xrightarrow{\textrm{dominant of}} \textrm{C major} \xrightarrow{\textrm{dominant of}} \textrm{F major} \hdots$$
+
+In virtue of the common kind of relation between adjacent pairs in this sequence, we can rewrite the relationship between the major triads in a form corresponding to the analogical reasoning question:
+
+$$\hdots \textrm{G major} : \textrm{C major}  :: \textrm{C major} : \textrm{F major} \hdots$$
+
+This form captures a notion fundamental to functional harmony that the C major triad is multivalent. It can operate as both the subject and object of the `dominant-of' relation. 
+
+While it is difficult to contrive an example in natural language that is precisely isomorphic, we nevertheless observe a parallel here with the problem of polysemy in natural language processing. As C major has one function in one context (it is the dominant in passages in the key of F major), and another function in a different context (it is the tonic in passages of C major), so too do many words have different meanings in different contexts.
+
+Our results suggest that, under certain conditions, the distribution of musical tokens in the embedding space that participate in these overlapping analogical chains described above is topologically regular. By analogy, so to speak, we speculate that polysemous tokens in natural language are be similarly structured in the neighborhoods of their corresponding positions in well-trained, plausible word embedding spaces.
+
+\subsection{Embedding models for stylistic analysis}
+
