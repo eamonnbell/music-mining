@@ -1,3 +1,5 @@
+%!TEX root = ../ycac2vec.tex
+
 \subsection{Corpus}\label{corpus}
 
 The Yale/Classical Archives Corpus (YCAC) is a database of pitch-class
@@ -34,9 +36,5 @@ A subset of the corpus was divided into four comparably-sized subcorpora based o
 
 A word2vec algorithm was used to train a number of word-embedding
 spaces. First, a space was trained on the entire corpus to evaluate its plausibility. Then, four separate word-embedding spaces were trained on the date-delimited subcorpora described above.\footnote{The implementation used was the word2vec model provided by the Python module `gensim', which uses a skip-gram negative sampling (SGNS) model which has been shown to be effective on large textual corpora. \cite{rehurek_lrec}}
-The algorithm treats each chroma vector as a word in a sentence. It
-returns an n-dimensional real-valued vector for each word. t-SNE
-dimensionality reduction was applied to the resultant word-embedding
-space to demonstrate its plausbility. PCA was applied to the resultant
-word-embedding space, and the locations of chroma vectors corresponding
-to major triads were plotted.
+This algorithm treats each chroma vector as a token in a sequence. It
+returns an n-dimensional real-valued vector for each chroma vector. Dimensionality reduction was applied to whole corpus embedding space to evaluate the plausibility of the embedding space. Dimensionality reduction was applied to the subcorpora embedding spaces to evaluate the, and the locations of chroma vectors corresponding to major triads were plotted in each embedding space.
