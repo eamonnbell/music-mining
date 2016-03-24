@@ -20,3 +20,4 @@ dat/
 *.ipynb_checkpoints
 *.zip
 *.csv
+*.model
