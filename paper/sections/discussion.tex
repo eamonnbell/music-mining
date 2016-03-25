@@ -1,21 +1,18 @@
 %!TEX root = ../ycac2vec.tex
 
 \subsection{Why the circular topology obtains}
-As shown most strongly in Figure~\ref{fig:1700_majors}, we can see that the circle of fifths emerges from the structure of the learned vector space of chords in classical music.
-This is not an intuitive result at first.
-However, to see that this is a reasonable result of applying the skip-gram word2vec model, consider the log-likelihood of the model.
-Gradients of the log-likelihood with respect to the embeddings are used to train the model.
+As shown most strongly in Figure~\ref{fig:1700_majors}, we can see that the circle of fifths emerges from the structure of the learned vector space of modeling all vertical haromies in the corpus. This is not an intuitive result at first.
+However, to see that this is a reasonable result of applying the skip-gram word embedding model, consider the log-likelihood of the model.Gradients of the log-likelihood with respect to the embeddings are used to train the model.
 The log-likelihood means the model will maximize the probability of correctly classifying the context given the training example.
 If the model assigns too high a probability to correct contexts, it will be overconfident on other (incorrect) contexts, and the derivative of the log-likelihood will push the embeddings further apart.
 But if the model assigns too low a probability to correct contexts, the gradient of the log-likelihood will flip signs and pull the embeddings closer together.
 The minimal geometric structure that minimizes these constraints is a circle. If the parts of the circle are perturbed (e.g. imagine shifting the values of an embedding in the circle by a large amonut), the above arguments show that it will return to a circular structure by virtue of the gradients of the objective function.
 We thus expect a circle from the principal components of highly stable embeddings (such as the embeddings of chords in the circle of fifths).
-
 \subsection{Why the order of roots in circle of fifths is preserved}
-To see why the circle of fifths respects the ordering, we consider the context window (\textbf{(size 5? in our case)}).
-Chords in the circle of fifths occur in each others' contexts, but usually only nearest neighbors (e.g. it is rare to see C major followed by B major).
-Therefore C major and G major occur in each others' contexts and will be pushed closer together during training.
-But they will be pushed apart from their non-nearest-neighbors (such as B major). This shows they will respect the ordering apparent in classical music where common practices such as counterpoint result in transitions prevalent on the circle of fifths.
+To see why the circle of fifths respects the ordering, we consider the context window parameter of the word embedding model (in this case $c = 5$). Chords in the circle of fifths tend to occur in each others' musical contexts, with a strong preference for nearest neighbors on the circle of fifths. That is, in normative common practice music is rare to see a C major triad shortly followed by a B major triad.
+
+Therefore, for example, C major and G major occur in each others' contexts and will be pushed closer together during training. But they will be pushed apart from their non-nearest-neighbors (such as B major). This shows they will respect the ordering apparent in music where the common practice of functional harmony results in transitions between major triads that are closer on the circle of fifths.
 
 \subsection{Why the arrangement deforms in models trained on later music}
-A prevailing narrative in the history of classical music is the decline in rigidity of the rules and/or prototypes `prescribed' by functional theories of harmony. Many pieces composed at the turn of the 19th-century and beyond eschew harmonic progressions based on root motion by perfect fifth and modulate to more distant keys, and more frequently than before. Our discussion above suggests that a regular circular topology in the embedding space is a consequence of a contextual stability of the major triad token-kind. Consequently, we conjecture that the reason for the deformation of this structure is the decrease in stability of the major triad in the 19th-century, particularly in Late Romantic music composed after 1850.
+A prevailing narrative in the history of classical music is the decline in rigidity of the rules and prototypes prescribed by functional theories of harmony. Many pieces composed at the turn of the 19th-century and beyond eschew harmonic progressions based on root motion by perfect fifth and modulate to more distant keys, and more frequently than before. 
+The discussion above suggests that a regular circular topology in the embedding space is a consequence of a contextual stability of the major triad token-class. Consequently, we conjecture that the reason for the deformation of this structure is the decrease in stability of the major triad in the 19th-century, particularly in late Romantic music composed after 1850.
