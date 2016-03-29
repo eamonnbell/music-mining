@@ -2,12 +2,12 @@
 
 \subsection{Why the circular topology obtains}
 As shown most strongly in Figure~\ref{fig:1700_majors}, we can see that the circle of fifths emerges from the structure of the learned vector space of modeling all vertical haromies in the corpus. This is not an intuitive result at first.
-However, to see that this is a reasonable result of applying the skip-gram word embedding model, consider the log-likelihood of the model.Gradients of the log-likelihood with respect to the embeddings are used to train the model.
+However, to see that this is a reasonable result of applying the skip-gram word embedding model, consider the log-likelihood of the model. Gradients of the log-likelihood with respect to the embeddings are used to train the model.
 The log-likelihood means the model will maximize the probability of correctly classifying the context given the training example.
 If the model assigns too high a probability to correct contexts, it will be overconfident on other (incorrect) contexts, and the derivative of the log-likelihood will push the embeddings further apart.
 But if the model assigns too low a probability to correct contexts, the gradient of the log-likelihood will flip signs and pull the embeddings closer together.
 The minimal geometric structure that minimizes these constraints is a circle. If the parts of the circle are perturbed (e.g. imagine shifting the values of an embedding in the circle by a large amonut), the above arguments show that it will return to a circular structure by virtue of the gradients of the objective function.
-We thus expect a circle from the principal components of highly stable embeddings (such as the embeddings of chords in the circle of fifths).
+Therefore, we expect a circle from the principal components of highly stable embeddings (such as the embeddings of chords in the circle of fifths).
 \subsection{Why the order of roots in circle of fifths is preserved}
 To see why the circle of fifths respects the ordering, we consider the context window parameter of the word embedding model (in this case $c = 5$). Chords in the circle of fifths tend to occur in each others' musical contexts, with a strong preference for nearest neighbors on the circle of fifths. That is, in normative common practice music is rare to see a C major triad shortly followed by a B major triad.
 
