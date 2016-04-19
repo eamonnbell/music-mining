@@ -2,6 +2,7 @@ venv
 *.json
 pretty_midi
 vis-framework
+paper/
 .ipynb_checkpoints/
 fit/
 dat/
