@@ -8,7 +8,7 @@ Eamonn Bell <epb2125@columbia.edu>, Jaan Altosaar <altosaar@princeton.edu>
 
 ### Process YCAC.ipynb
 
-Parse the [Yale Classical Archives Corpus](http://ycac.yale.edu/downloads) (not included in the repo) into binary pitch-class tokens (e.g. <100100000000> = {C, E}) and join to metadata for binning by date of composition.
+Parse the [Yale Classical Archives Corpus](http://ycac.yale.edu/downloads) (not included in the repo) into binary pitch-class tokens (e.g. <100010000000> = {C, E}) and join to metadata for binning by date of composition.
 
 ## PCA plots from YCAC files.ipynb
 
