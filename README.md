@@ -2,6 +2,9 @@
 
 Borrowing new techniques from NLP and stat learning to attack music
 
+Eamonn Bell <epb2125@columbia.edu> 
+Jaan Altosaar <altosaar@princeton.edu>
+
 ## word2vec on reduced chord tokens
 
 ### Process YCAC.ipynb
