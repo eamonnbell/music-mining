@@ -44,7 +44,7 @@ def choose_file():
   selection = -1
 
   while int(selection) not in menumap:
-    selection = int(raw_input("Choose an input file>"))
+    selection = int(input("Choose an input file>"))
   
   return menumap[selection]
 
