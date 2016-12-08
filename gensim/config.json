@@ -1,0 +1,13 @@
+{
+  "embeddings": [
+    {
+      "tensorName": "YCAC (gensim) lite",
+      "tensorShape": [
+        1426,
+        100
+      ],
+      "tensorPath": "https://raw.githubusercontent.com/eamonnbell/music-mining/master/gensim/embeddings_lite.tsv",
+      "metadataPath": "https://raw.githubusercontent.com/eamonnbell/music-mining/master/gensim/metadata_lite.tsv"
+    }
+  ]
+}
