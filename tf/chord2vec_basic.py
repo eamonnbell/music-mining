@@ -56,7 +56,7 @@ filename = choose_file()
 def read_data(filename):
   """Extract the first file enclosed in a zip file as a list of words"""
   with zipfile.ZipFile(filename) as f:
-    data = tf.compat.as_str(f.read(f.namelist()[0])).split()
+    data = tf.compat.as_str(f.read(f.namelist()[0])).split('\n')
   return data
 
 words = read_data(filename)
@@ -243,7 +243,7 @@ def save_labels(labels):
     json.dump(labels, f)
 
 def save_embeddings(embeddings):
-  with open('embeddings.npy', 'w') as f:
+  with open('embeddings.npy', 'wb') as f:
     np.save(f, embeddings)
 
 labels = [reverse_dictionary[i] for i in xrange(len(reverse_dictionary.keys()))]
