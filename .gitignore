@@ -1,5 +1,6 @@
 venv
 *.json
+!tf/*.json
 pretty_midi
 vis-framework
 paper/

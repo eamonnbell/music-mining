@@ -19,11 +19,15 @@ from __future__ import division
 from __future__ import print_function
 
 import collections
+import csv
+import functools
 import glob
 import json
 import math
+import music21
 import os
 import random
+import sys
 import zipfile
 
 import numpy as np
@@ -31,39 +35,29 @@ from six.moves import urllib
 from six.moves import xrange  # pylint: disable=redefined-builtin
 import tensorflow as tf
 
-def choose_file():
-  zips = glob.glob("*.zip")
-  menumap = {}
-
-  for i, filename in enumerate(zips):
-    menumap[i] = filename
-
-  for key, value in menumap.items():
-    print("[{}] {}".format(key, value))
-
-  selection = -1
-
-  while int(selection) not in menumap:
-    selection = int(input("Choose an input file>"))
-  
-  return menumap[selection]
-
-filename = choose_file()
-
-
+filename = sys.argv[1] 
 
 # Read the data into a list of strings.
 def read_data(filename):
   """Extract the first file enclosed in a zip file as a list of words"""
-  with zipfile.ZipFile(filename) as f:
-    data = tf.compat.as_str(f.read(f.namelist()[0])).split('\n')
+  with open(filename, 'r') as f:
+    data = tf.compat.as_str(f.read()).split(' ')
   return data
 
 words = read_data(filename)
 print('Data size', len(words))
 
+actual_vocabulary_size = len(set(words))
+print('Actual vocabulary size', actual_vocabulary_size)
 # Step 2: Build the dictionary and replace rare words with UNK token.
-vocabulary_size = 2500
+max_vocabulary_size = 500
+
+if actual_vocabulary_size < max_vocabulary_size:
+  vocabulary_size = actual_vocabulary_size
+  print('Modeled vocabulary size (less than max)', vocabulary_size)
+else:
+  vocabulary_size = max_vocabulary_size
+  print('Modeled vocabulary size (set to max)', vocabulary_size)
 
 def build_dataset(words):
   count = [['UNK', -1]]
@@ -135,7 +129,7 @@ num_skips = 2         # How many times to reuse an input to generate a label.
 valid_size = 16     # Random set of words to evaluate similarity on.
 valid_window = 100  # Only pick dev samples in the head of the distribution.
 valid_examples = np.random.choice(valid_window, valid_size, replace=False)
-num_sampled = 64    # Number of negative examples to sample.
+num_sampled = 16    # Number of negative examples to sample.
 
 graph = tf.Graph()
 
@@ -181,7 +175,7 @@ with graph.as_default():
   init = tf.initialize_all_variables()
 
 # Step 5: Begin training.
-num_steps = 15001
+num_steps = 2001
 
 with tf.Session(graph=graph) as session:
   # We must initialize all variables before we use them.
@@ -199,9 +193,9 @@ with tf.Session(graph=graph) as session:
     _, loss_val = session.run([optimizer, loss], feed_dict=feed_dict)
     average_loss += loss_val
 
-    if step % 2000 == 0:
+    if step % 100 == 0:
       if step > 0:
-        average_loss /= 2000
+        average_loss /= 100
       # The average loss is an estimate of the loss over the last 2000 batches.
       print("Average loss at step ", step, ": ", average_loss)
       average_loss = 0
@@ -221,48 +215,16 @@ with tf.Session(graph=graph) as session:
         print(log_str)"""
   final_embeddings = normalized_embeddings.eval()
 
-def plot_with_labels(low_dim_embs, labels, filename='tsne.png'):
-  assert low_dim_embs.shape[0] >= len(labels), "More labels than embeddings"
-  plt.figure(figsize=(18, 18))  #in inches
-
-  for i, label in enumerate(labels):
-    x, y = low_dim_embs[i,:]
-
-    plt.scatter(x, y)
-    plt.annotate(label,
-                 xy=(x, y),
-                 xytext=(5, 2),
-                 textcoords='offset points',
-                 ha='right',
-                 va='bottom')
-
-  plt.savefig(filename)
-
 def save_labels(labels):
-  with open('labels.json', 'w') as f:
-    json.dump(labels, f)
+  with open('{}.labels'.format(filename.replace('.corpus', '')), 'w') as output_file:
+    dw = csv.DictWriter(output_file,fieldnames=['label'],delimiter='\t')
+    dw.writerows([{'label':l} for l in labels])
 
 def save_embeddings(embeddings):
-  with open('embeddings.npy', 'wb') as f:
-    np.save(f, embeddings)
+  np.savetxt('{}.embeddings'.format(filename.replace('.corpus', '')),embeddings, fmt='%.6f', delimiter='\t')
 
 labels = [reverse_dictionary[i] for i in xrange(len(reverse_dictionary.keys()))]
 save_labels(labels)
 print("labels saved")
 save_embeddings(final_embeddings)
 print("embeddings saved")
-
-try:
-  from sklearn.manifold import TSNE
-  import matplotlib.pyplot as plt
-
-  tsne = TSNE(perplexity=30, n_components=2, init='pca', n_iter=5000)
-  plot_only = 100
-  low_dim_embs = tsne.fit_transform(final_embeddings[:plot_only,:])
-  labels = [reverse_dictionary[i] for i in xrange(plot_only)]
-
-  plot_with_labels(low_dim_embs, labels)
-
-except ImportError:
-  print("Please install sklearn and matplotlib to visualize embeddings.")
-
