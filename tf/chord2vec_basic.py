@@ -118,9 +118,9 @@ for i in range(8):
 
 # Step 4: Build and train a skip-gram model.
 
-batch_size = 1000
+batch_size = 128
 embedding_size = 100  # Dimension of the embedding vector.
-skip_window = 5       # How many words to consider left and right.
+skip_window = 1       # How many words to consider left and right.
 num_skips = 2         # How many times to reuse an input to generate a label.
 
 # We pick a random validation set to sample nearest neighbors. Here we limit the
